@@ -1,0 +1,109 @@
+<!--Jake Arnett
+Description: create a program where a user may input a roman numeral and it will output the correct arabic numeral and vice-versa-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <fieldset style="width:fit-content;">
+        <label for="romanInput">Input Roman Numeral:</label>
+        <input type="text" name="romanInput" id="romanInput">
+        <input type="button" value="Convert" onclick="convertToNumber()"><br><br>
+
+        <label for="numericInput">Input a number:</label>
+        <input type="number" name="numericInput" id="numericInput">
+        <input type="button" value="Convert" onclick="convertToRoman()">
+
+    </fieldset>
+
+    <script>
+
+        //Function to change a roman numeral to an arabic number
+        function convertToNumber()
+            {
+                var iNumberOutput = 0;
+                var sRomanInput = document.getElementById("romanInput").value.toUpperCase();
+                
+                //seperate the roman numerals so each can be changed to their corresponding values
+                var asRomanNumeral = sRomanInput.split("");
+
+                //change roman numerals to their arabic values
+                for(let iCount = 0; iCount < sRomanInput.length; iCount++)
+                {
+                    if(asRomanNumeral[iCount] == "M")
+                    {
+                        asRomanNumeral[iCount] = 1000;
+                    }
+                    else if(asRomanNumeral[iCount] == "D")
+                    {
+                        asRomanNumeral[iCount] = 500;
+                    }
+                    else if(asRomanNumeral[iCount] == "C")
+                    {
+                        asRomanNumeral[iCount] = 100;
+                    }
+                    else if(asRomanNumeral[iCount] == "L")
+                    {
+                        asRomanNumeral[iCount] = 50;
+                    }
+                    else if(asRomanNumeral[iCount] == "X")
+                    {
+                        asRomanNumeral[iCount] = 10;
+                    }
+                    else if(asRomanNumeral[iCount] == "V")
+                    {
+                        asRomanNumeral[iCount] = 5;
+                    }
+                    else if(asRomanNumeral[iCount] == "I")
+                    {
+                        asRomanNumeral[iCount] = 1;
+                    }
+                }
+
+                //Loop to account for the subtractioin that needs to take place
+                for(let iOuterCount = 0; iOuterCount < sRomanInput.length; iOuterCount++)
+                {
+                    let iInnerCount = iOuterCount + 1;
+
+                    //if a value is zero because a subraction has taken place behind the scenes, let it remain in it's position without hindering potential further subtraction needs
+                    if(asRomanNumeral[iOuterCount] < asRomanNumeral[iInnerCount] & asRomanNumeral[iOuterCount] == 0)
+                    {
+                    }
+                    //if a smaller value precedes a larger value: subtract the smaller from the larger, assign it to the first of two spots, and change the second spot to 0
+                    //this allows simple addition later
+                    else if(asRomanNumeral[iOuterCount] < asRomanNumeral[iInnerCount])
+                    {
+                        asRomanNumeral[iOuterCount] = asRomanNumeral[iInnerCount] - asRomanNumeral[iOuterCount];
+                        asRomanNumeral[iInnerCount] = 0;
+                    }
+                }
+
+                //add all the spots in the array of values (with subtractions already accounted for) to determine the arabic numeral 
+                for(let iCount = 0; iCount < sRomanInput.length; iCount++)
+                {
+                    
+                    iNumberOutput += asRomanNumeral[iCount];
+                }
+                alert("The Roman Numeral as an Arabic number is: " + iNumberOutput);
+                
+            }
+
+
+            //I didn't have time to find a way to convert a number to an roman numeral. My assumption is that you would need a list of possible roman numberal combinations
+        function convertToRoman()
+            {
+                var iNumberInput = document.getElementById("numericInput").value;
+
+                alert(iNumberInput);
+                alert("I didn't have time to figure this part out")
+            }
+
+
+
+    </script>
+</body>
+</html>
